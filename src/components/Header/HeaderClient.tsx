@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import logo from "../../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 const HeaderClient = () => {
   const slides = [
@@ -39,6 +41,7 @@ const HeaderClient = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
   const goNext = () => {
     setCurrentIndex((prev) => (prev + 1) % slides.length);
@@ -57,7 +60,7 @@ const HeaderClient = () => {
   const currentSlide = slides[currentIndex];
 
   return (
-    <>
+    <div className="bg-[#F4F4F4]">
       <div
         className={`${currentSlide[0].bg} transition-colors duration-500 ease-in-out`}
       >
@@ -85,30 +88,127 @@ const HeaderClient = () => {
 
       {/* Header */}
       <div className="container mx-auto">
-        <header className="flex justify-between items-center">
-          <h2 className="">SMARTHUB.COM</h2>
-          <div>
-            <form action="">
-              <input type="text" placeholder="Hôm nay bạn muốn tìm kiếm gì?" />
-              <button>
-                <i className="ri-search-2-line"></i>
-                <p>Tìm kiếm</p>
+        <header className="flex justify-between items-center py-5">
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="" className="w-10 h-10" />
+            <h2 className="text-2xl font-semibold text-green-950">
+              SMARTHUB<span className="text-green-600">.COM</span>
+            </h2>
+          </div>
+          <div className="bg-white rounded-2xl">
+            <form action="" className="flex px-4 py-4 rounded-2xl">
+              <input
+                type="text"
+                placeholder="Hôm nay bạn muốn tìm kiếm gì?"
+                className="w-96 outline-none"
+              />
+              <button className="flex border-l-[1px] border-[#ccc] pl-4 gap-2 text-green-600 items-center group">
+                <i className="ri-search-2-line text-xl font-medium group-hover:text-green-800 transition-colors duration-100 ease-in-out"></i>
+                <p className="font-medium group-hover:text-green-800 transition-colors duration-100 ease-in-out">
+                  Tìm kiếm
+                </p>
               </button>
             </form>
           </div>
-          <div>
-            <div>
-              <i className="ri-user-3-line"></i>
-              <p>Tài khoản</p>
+          <div className="flex items-center gap-4">
+            <div
+              className="relative"
+              onMouseEnter={() => setShowAccountDropdown(true)}
+              onMouseLeave={() => setShowAccountDropdown(false)}
+            >
+              <div className="flex items-center gap-1 group cursor-pointer">
+                <i className="ri-user-3-line text-base text-green-600 group-hover:text-green-800 transition-colors duration-100 ease-in-out"></i>
+                <p className="text-xs font-medium text-green-600 group-hover:text-green-800 transition-colors duration-100 ease-in-out">
+                  Tài khoản
+                </p>
+              </div>
+
+              {/* Box Đăng ký/Đăng nhập */}
+              {/* === PHẦN ĐÃ CHỈNH SỬA === */}
+              <div
+                className={`absolute top-full right-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-10
+                           transition-all duration-300 ease-out
+                           ${
+                             showAccountDropdown
+                               ? "opacity-100 translate-y-0 visible"
+                               : "opacity-0 translate-y-2 invisible"
+                           }`}
+              >
+                <Link
+                  to="/register"
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-green-600 transition-colors duration-200"
+                >
+                  Đăng ký
+                </Link>
+                <Link
+                  to="/login"
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-green-600 transition-colors duration-200"
+                >
+                  Đăng nhập
+                </Link>
+              </div>
+              {/* === KẾT THÚC PHẦN CHỈNH SỬA === */}
             </div>
-            <div>
-              <i className="ri-shopping-cart-2-line"></i>
-              <p>Giỏ hàng</p>
+            <div className="flex items-center gap-1 group">
+              <i className="ri-shopping-bag-4-line text-2xl text-[#777] group-hover:text-green-800 transition-colors duration-100 ease-in-out"></i>
+              <span className="bg-red-500 rounded-full py-1 px-2 text-white text-xs">
+                0
+              </span>
             </div>
           </div>
         </header>
       </div>
-    </>
+      <hr />
+      <div className="container mx-auto py-3">
+        <nav>
+          <ul className="flex gap-8">
+            <li>
+              <Link
+                to={`/`}
+                className="text-base font-medium hover:text-green-600 transition-colors ease-in-out duration-300"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/`}
+                className="flex items-center gap-1 text-base font-medium group"
+              >
+                <p className="group-hover:text-green-600 transition-colors ease-in-out duration-300">
+                  Products
+                </p>
+                <i className="ri-arrow-down-s-line group-hover:text-green-600 transition-colors ease-in-out duration-300"></i>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/`}
+                className="text-base font-medium hover:text-green-600 transition-colors ease-in-out duration-300"
+              >
+                Categories
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/`}
+                className="text-base font-medium hover:text-green-600 transition-colors ease-in-out duration-300"
+              >
+                Blogs
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/`}
+                className="text-base font-medium hover:text-green-600 transition-colors ease-in-out duration-300"
+              >
+                Orders
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   );
 };
 

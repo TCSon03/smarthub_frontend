@@ -1,9 +1,9 @@
 import HomePage from "../pages/clients/Home/HomePage";
-import ShopPage from "../pages/clients/Product/ShopPage";
+import ProductPage from "../pages/clients/Product/ProductPage";
 
 const clientRouter = [
   { path: "/", element: <HomePage /> },
-  { path: "/shop", element: <ShopPage /> },
+  { path: "/product", element: <ProductPage /> },
 ];
 
 export default clientRouter;
