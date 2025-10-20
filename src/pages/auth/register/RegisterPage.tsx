@@ -2,8 +2,27 @@ import React from "react";
 import logo from "../../../assets/images/logo.png";
 import logo_auth from "../../../assets/images/logo_auth.png";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  userName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   return (
     <div>
       <div className="flex h-screen">
@@ -95,7 +114,7 @@ const RegisterPage = () => {
             <p className="text-sm font-semibold mb-5">
               Bạn đã từng mua sắm tại SmartHub? Đăng nhập mua hàng ngay
             </p>
-            <form action="" className="mb-2">
+            <form action="" onSubmit={onSubmit} className="mb-2">
               <div className="mb-4">
                 <label htmlFor="" className="text-sm font-semibold block mb-2">
                   Nhập tên của bạn
@@ -103,7 +122,9 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   className="w-full border rounded-md px-4 py-2 outline-none"
+                  {...register("userName")}
                 />
+                {errors?.userName && <span>{errors.userName.message}</span>}
               </div>
               <div className="mb-4">
                 <label htmlFor="" className="text-sm font-semibold block mb-2">
